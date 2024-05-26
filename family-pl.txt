@@ -1,0 +1,60 @@
+% Facts
+male(john).
+male(peter).
+male(tom).
+female(lisa).
+female(susan).
+female(mary).
+
+parent(john, peter).
+parent(john, susan).
+parent(mary, peter).
+parent(mary, susan).
+parent(peter, tom).
+parent(lisa, tom).
+
+% Rules
+father(F, C) :-
+    male(F),
+    parent(F, C).
+
+mother(M, C) :-
+    female(M),
+    parent(M, C).
+
+child(C, P) :-
+    parent(P, C).
+
+sibling(S1, S2) :-
+    parent(P, S1),
+    parent(P, S2),
+    S1 \= S2.
+
+grandparent(GP, GC) :-
+    parent(GP, P),
+    parent(P, GC).
+
+grandfather(GF, GC) :-
+    male(GF),
+    grandparent(GF, GC).
+
+grandmother(GM, GC) :-
+    female(GM),
+    grandparent(GM, GC).
+
+grandchild(GC, GP) :-
+    grandparent(GP, GC).
+
+brother(B, S) :-
+    male(B),
+    sibling(B, S).
+
+sister(S, Sibling) :-
+    female(S),
+    sibling(S, Sibling).
+
+% Example Queries
+% To find Peter's father: father(X, peter).
+% To find John's children: child(X, john).
+% To find Peter's siblings: sibling(X, peter).
+% To find Tom's grandparents: grandparent(X, tom).
